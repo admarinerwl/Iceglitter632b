@@ -1,21 +1,48 @@
 const mysql = require("mysql2");
 const sha256 = require("crypto-js/sha256");
-const { reject } = require("lodash");
+const { rest, reject } = require("lodash");
 
+const sqlite3 = require("sqlite3").verbose();
+const file = "./imfpastexams.db";
+
+var database = new sqlite3.Database(file, (err) => {
+    if(err){
+        console.log("failed to connect db");
+    }
+    console.log("Connected to DB");
+});
+
+// console.log(database);
 //passwd: imfnctu
 //user: imf
 
-const pool = mysql.createPool({
-    connectionLimit: 10,
-    password:  "Jerry4pihai",
-    user: "iceglitter",
-    host: "imfpastexam.mysql.database.azure.com",
-    database: "imfexams",
-    port: "3306"
-});
+// const pool = mysql.createPool({
+//     connectionLimit: 10,
+//     password:  "Jerry4pihai",
+//     user: "iceglitter",
+//     host: "imfpastexam.mysql.database.azure.com",
+//     database: "imfexams",
+//     port: "3306"
+// });
 
 
 let db = {};
+
+db.test = () => {
+    var sql = "SELECT coursename FROM grades WHERE grade = 1 ORDER BY coursename DESC LIMIT 5";
+    var params = [];
+    return new Promise((resolve, reject)=>{
+        database.all(sql, params, (err, rows) => {
+            if(err){
+                console.log(err);
+                return reject(err);
+            }
+            console.log(rows)
+            return resolve(rows);
+        });
+    })
+    
+};
 
 db.all = (req) => {
     // var course = req.params.course;
