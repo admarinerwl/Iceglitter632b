@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/0596a947-cd13-4894-a81c-f95350df0ee8/resourceGroups/nycuimf/providers/Microsoft.Web/sites/pastexams-backend",
+    "appService.deploySubpath": "."
+}

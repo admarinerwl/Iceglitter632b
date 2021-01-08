@@ -7,6 +7,7 @@ const path = require("path");
 
 // Import paths self-defined
 const dbRouter = require("./routes");
+const { rest } = require("lodash");
 
 // Use packages in app
 const app = express();
@@ -39,7 +40,11 @@ app.post("/upload", (req, res) => {
 
 app.get("/hello", (req, res) => {
     res.send("Hello World!");
-})
+});
+
+app.get("/", (req, res) => {
+    res.send("YES!");
+});
 
 // Use self-defined routes
 app.use("/dbRouter", dbRouter.router);
