@@ -7,7 +7,6 @@ const path = require("path");
 
 // Import paths self-defined
 const dbRouter = require("./routes");
-const { rest } = require("lodash");
 
 // Use packages in app
 const app = express();

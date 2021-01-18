@@ -4,6 +4,8 @@ const db = require("../db");
 
 const router = express.Router();
 
+//測試用不用在意
+// ***************************************************
 router.get("/test", async (req, res, next) => {
     try{
         let results = await db.test();
@@ -16,7 +18,10 @@ router.get("/test", async (req, res, next) => {
         console.log("failed");
         res.sendStatus(500);
     }
-})
+});
+// ****************************************************
+//測試結束
+
 
 router.get("/getcourseexams", async (req, res, next) => {
     try{
@@ -72,7 +77,6 @@ function uploadtodb(body, filename) {
     const id = db.upload(body, filename);
     return id;
 };
-
 
 
 module.exports = {

@@ -12,20 +12,6 @@ var database = new sqlite3.Database(file, (err) => {
     console.log("Connected to DB");
 });
 
-// console.log(database);
-//passwd: imfnctu
-//user: imf
-
-// const pool = mysql.createPool({
-//     connectionLimit: 10,
-//     password:  "Jerry4pihai",
-//     user: "iceglitter",
-//     host: "imfpastexam.mysql.database.azure.com",
-//     database: "imfexams",
-//     port: "3306"
-// });
-
-
 let db = {};
 
 db.test = () => {
@@ -47,52 +33,62 @@ db.test = () => {
 db.all = (req) => {
     // var course = req.params.course;
     const course = req.query[0];
+    var sql = `SELECT * FROM courses WHERE course = "${course}" ORDER BY year DESC`;
+    var params = [];
     return new Promise((resolve, reject)=>{
-        pool.query(
-            `SELECT * FROM courses WHERE course = ? ORDER BY year DESC`, 
-            course,
-        (err, results) => {
+        database.all(sql, params, (err, rows) =>{
             if(err){
+                console.log(err);
                 return reject(err);
             }
-            return resolve(results);
-        });
+            console.log(rows);
+            return resolve(rows);
+        })
     });
 };
 
 db.getcourses = (id) => {
+    var sql = `SELECT coursename FROM grades WHERE grade = ${id} ORDER BY coursename DESC`;
+    var params = [];
     return new Promise((resolve, reject)=>{
-        pool.query(`SELECT coursename FROM grades WHERE grade = ? ORDER BY coursename DESC`, id,
-        (err, results) => {
+        database.all(sql, params, (err, rows) =>{
             if(err){
+                console.log(err);
                 return reject(err);
             }
-            return resolve(results);
+            console.log(rows);
+            return resolve(rows);
         });
     });
 };
 
 db.getallcourses = () => {
+    var sql = `SELECT coursename FROM grades ORDER BY coursename DESC`;
+    var params = [];
     return new Promise((resolve, reject)=>{
-        pool.query("SELECT coursename FROM grades ORDER BY coursename DESC",
-        (err, results) => {
-            if(err){
-                return reject(err);
-            }
-            return resolve(results);
-        });
+       database.all(sql, params, (err, rows)=>{
+           if(err){
+               console.log(err);
+               return reject(err);
+           }
+           console.log(rows);
+           return resolve(rows);
+       })
     });
 };
 
 db.getallteachers = () => {
-    return new Promise((resolve, reject)=>{
-        pool.query("SELECT DISTINCT teacher FROM courses",
-        (err, results) => {
+    const sql = `SELECT DISTINCT teacher FROM courses`;
+    var params = [];
+    return new Promise((resolve, reject)=> {
+        database.all(sql, params, (err, rows) => {
             if(err){
+                console.log(err);
                 return reject(err);
             }
-            return resolve(results);
-        });
+            console.log(rows);
+            return resolve(rows);
+        })
     });
 };
 
@@ -104,46 +100,34 @@ db.upload = (body, filename) => {
     let grade = body.grade;
     let code = course+year+type+teacher+filename;
     let id = sha256(code).toString();
-    if(type==="課本" || type==="講義"){
-        pool.query(
-            `INSERT INTO textbooks VALUES(?,?,?,?,?,?,?,?)`,
-            [id, year, course, teacher, type, filename, grade, '0'],
-            (err, result) =>{
-                if(err) console.log(err);
+
+    database.run(
+        `INSERT INTO courses VALUES(?,?,?,?,?,?,?,?)`, 
+        [id, year, course, teacher, type, filename, grade, '0'],
+        (err)=>{
+            if(err){
+                return console.log(err.message);
             }
-        );
-    }
-    else{
-        pool.query(
-            `INSERT INTO courses VALUES(?,?,?,?,?,?,?,?)`,
-            [id, year, course, teacher, type, filename, grade, '0'],
-            (err, result) =>{
-                if(err) console.log(err);
-            }
-        );
-    }
-    // pool.query(
-    //     `INSERT INTO teachers (teacher)
-    //     SELECT DISTINCT teacher
-    //     FROM courses
-    //     WHERE teacher NOT IN (SELECT teacher FROM teachers)`,
-    //     (err, result) => {
-    //         if(err) console.log(err);
-    //     }
-    // )
+            console.log("Row was added to table");
+        }
+    );
+    
     return id;
 }
 
 db.getfilename = (id) => {
     console.log(id);
+    const sql = `SELECT filename FROM courses WHERE id = ${id}`;
+    var params =  [];
     return new Promise((resolve, reject)=>{
-        pool.query(`SELECT filename FROM courses WHERE id = ?`, id,
-        (err, results) => {
+        database.all(sql, params, (err, rows)=>{
             if(err){
+                console.log(err.message);
                 return reject(err);
             }
-            return resolve(results);
-        });
+            console.log(rows);
+            return resolve(rows);
+        })
     });
 };
 
