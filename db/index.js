@@ -117,7 +117,7 @@ db.upload = (body, filename) => {
 
 db.getfilename = (id) => {
     console.log(id);
-    const sql = `SELECT filename FROM courses WHERE id = ${id}`;
+    const sql = `SELECT filename FROM courses WHERE id = '${id}'`;
     var params =  [];
     return new Promise((resolve, reject)=>{
         database.all(sql, params, (err, rows)=>{
