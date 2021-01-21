@@ -5,12 +5,7 @@ const { rest, reject } = require("lodash");
 const sqlite3 = require("sqlite3").verbose();
 const file = "./imfpastexams.db";
 
-var database = new sqlite3.Database(file, (err) => {
-    if(err){
-        console.log("failed to connect db");
-    }
-    console.log("Connected to DB");
-});
+var database = new sqlite3.Database(file);
 
 let db = {};
 
@@ -41,7 +36,6 @@ db.all = (req) => {
                 console.log(err);
                 return reject(err);
             }
-            console.log(rows);
             return resolve(rows);
         })
     });
@@ -56,7 +50,6 @@ db.getcourses = (id) => {
                 console.log(err);
                 return reject(err);
             }
-            console.log(rows);
             return resolve(rows);
         });
     });
@@ -71,7 +64,6 @@ db.getallcourses = () => {
                console.log(err);
                return reject(err);
            }
-           console.log(rows);
            return resolve(rows);
        })
     });
@@ -86,7 +78,6 @@ db.getallteachers = () => {
                 console.log(err);
                 return reject(err);
             }
-            console.log(rows);
             return resolve(rows);
         })
     });
@@ -125,7 +116,6 @@ db.getfilename = (id) => {
                 console.log(err.message);
                 return reject(err);
             }
-            console.log(rows);
             return resolve(rows);
         })
     });

@@ -9,8 +9,6 @@ const router = express.Router();
 router.get("/test", async (req, res, next) => {
     try{
         let results = await db.test();
-        console.log(results)
-        
         Object.values(results).forEach(val => console.log(val.coursename)); // 得到所有的值
 
         res.json(results);
@@ -77,7 +75,6 @@ function uploadtodb(body, filename) {
     const id = db.upload(body, filename);
     return id;
 };
-
 
 module.exports = {
     router,
