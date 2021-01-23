@@ -89,12 +89,13 @@ db.upload = (body, filename) => {
     let course = body.course;
     let teacher = body.teacher;
     let grade = body.grade;
+    let provider = body.provider;
     let code = course+year+type+teacher+filename;
     let id = sha256(code).toString();
 
     database.run(
         `INSERT INTO courses VALUES(?,?,?,?,?,?,?,?)`, 
-        [id, year, course, teacher, type, filename, grade, '0'],
+        [id, year, course, teacher, type, filename, grade, provider],
         (err)=>{
             if(err){
                 return console.log(err.message);
