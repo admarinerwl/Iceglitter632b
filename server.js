@@ -47,7 +47,6 @@ app.post("/upload", (req, res) => {
 //authenication
 app.get("/auth", async (req, res, next) => {
     console.log(req.query.code);
-    return res.send(req.query.code);
     const postData = {
         grant_type: 'authorization_code',
         code: req.query.code,
