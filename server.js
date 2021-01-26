@@ -78,11 +78,15 @@ app.get("/auth", async (req, res, next) => {
         request(getusername, (error, response)=>{
             const data = JSON.parse(response.body);
             console.log(data);
+            var date = new Date();
+            var minutes = 10;
+            date.setTime(date.getTime()+(minutes*60*1000));
             if(error){
-                console.log("fuck you 2");
-                return res.send("failed 2");
+                res.cookie('username', "none", {expires: date.toUTCString()})
             }
-            return res.send(data);
+            res.cookie("username", data.username, {expires: date.toUTCString()});
+            res.cookie("email", data.email, {expires: date.toUTCString()});
+            return res.redirect("https://imfpastexams.z11.web.core.windows.net/");
         })
 
     })
