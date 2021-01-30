@@ -44,7 +44,7 @@ app.post("/upload", (req, res) => {
     
 });
 
-//authenication
+//authenication pls
 app.get("/auth", async (req, res, next) => {
     console.log(req.query.code);
     const postData = {
