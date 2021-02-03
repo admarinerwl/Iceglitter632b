@@ -86,8 +86,8 @@ app.get("/auth", async (req, res, next) => {
             }
             // res.cookie("username", data.username, {expires: date.toUTCString()});
             // res.cookie("email", data.email, {expires: date.toUTCString()});
-            return res.send(data);
-            // return res.redirect("https://imfpastexams.z11.web.core.windows.net/");
+            // return res.send(data);
+            return res.redirect("https://imfpastexams.z11.web.core.windows.net/");
         })
 
     })
