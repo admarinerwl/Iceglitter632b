@@ -84,10 +84,11 @@ app.get("/auth", async (req, res, next) => {
             if(error){
                 res.cookie('username', "none", {expires: date.toUTCString()})
             }
-            res.cookie("username", data.username, {expires: date.toUTCString()});
-            res.cookie("email", data.email, {expires: date.toUTCString()});
+            // res.cookie("username", data.username, {expires: date.toUTCString()});
+            // res.cookie("email", data.email, {expires: date.toUTCString()});
+            res.cookie("hi", "hi");
             // return res.send(data);
-            return res.redirect("https://imfpastexams.z11.web.core.windows.net/");
+            return res.redirect(302, "https://imfpastexams.z11.web.core.windows.net/");
         })
 
     })
