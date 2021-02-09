@@ -82,13 +82,15 @@ app.get("/auth", async (req, res, next) => {
             var minutes = 10;
             date.setTime(date.getTime()+(minutes*60*1000));
             if(error){
-                res.cookie('username', "none", {expires: date.toUTCString()})
             }
-            // res.cookie("username", data.username, {expires: date.toUTCString()});
-            // res.cookie("email", data.email, {expires: date.toUTCString()});
-            res.cookie("hi", "hi");
-            // return res.send(data);
-            return res.redirect(302, "https://imfpastexams.z11.web.core.windows.net/");
+
+            return res.redirect(url.format({
+                "https://imfpastexams.z11.web.core.windows.net/",
+                query:{
+                    "username" : data.username,
+                    "email": data.email
+                }
+            }));
         })
 
     })
