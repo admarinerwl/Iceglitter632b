@@ -85,7 +85,7 @@ app.get("/auth", async (req, res, next) => {
             }
 
             return res.redirect(url.format({
-                "https://imfpastexams.z11.web.core.windows.net/",
+                pathname: "https://imfpastexams.z11.web.core.windows.net/",
                 query:{
                     "username" : data.username,
                     "email": data.email
