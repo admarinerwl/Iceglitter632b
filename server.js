@@ -78,19 +78,11 @@ app.get("/auth", async (req, res, next) => {
         request(getusername, (error, response)=>{
             const data = JSON.parse(response.body);
             console.log(data);
-            var date = new Date();
-            var minutes = 10;
-            date.setTime(date.getTime()+(minutes*60*1000));
-            if(error){
-            }
-
-            return res.redirect(url.format({
-                pathname: "https://imfpastexams.z11.web.core.windows.net/",
-                query:{
-                    "username" : data.username,
-                    "email": data.email
-                }
-            }));
+            const query = qs.stringify({
+                "username": data.username,
+                "email": data.email
+            })
+            return res.redirect('https://imfpastexams.z11.web.core.windows.net/?'+query);
         })
 
     })
