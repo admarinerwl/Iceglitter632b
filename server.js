@@ -82,66 +82,10 @@ app.get("/auth", async (req, res, next) => {
                 "username": data.username,
                 "email": data.email
             })
+            res.cookie("hi", "hi");
             return res.redirect('https://imfpastexams.z11.web.core.windows.net/?'+query);
         })
-
     })
-    
-
-    // console.log(req.params.code);
-    // const config = {
-    //     headers: {
-    //         "Content-Type": "application/x-www-form-urlencoded"
-    //     }
-    // };
-    // const url = "https://id.nycu.edu.tw/o/token/";
-    // try{
-    //     await axios({
-    //         method: "post",
-    //         url: url,
-    //         headers: {
-    //             "Content-Type": "application/x-www-form-urlencoded"
-    //         },
-    //         body: {
-    //             grant_type: 'authorization_code',
-    //             code: req.params.code,
-    //             client_id: 'pOfDk9OdGmTIa9Ro0uvpNDBJX6tfQda3tNPLpqRy',
-    //             client_secret: 'hYkGpVbVxPwmLxatD8D1R7lB6QECW39gPCLdOxydujMEUBs3dQp34M0SnHjVfSgFA3G1VyndcPqukPyDK2ArMJtAtYTTZ73wxe1pbztTW5KK69QsLS1ULEbMbrOsvd1F',
-    //             redirect_uri:  'https://imfpastexams.z11.web.core.windows.net/'
-    //         }
-    //     }).then((response)=>{
-    //         console.log(response.data);
-    //         res.send(response.data);
-    //     })
-    //     await axios.post(
-    //         url,
-    //         {
-    //             grant_type: 'authorization_code',
-    //             code: req.params.code,
-    //             client_id: 'pOfDk9OdGmTIa9Ro0uvpNDBJX6tfQda3tNPLpqRy',
-    //             client_secret: 'hYkGpVbVxPwmLxatD8D1R7lB6QECW39gPCLdOxydujMEUBs3dQp34M0SnHjVfSgFA3G1VyndcPqukPyDK2ArMJtAtYTTZ73wxe1pbztTW5KK69QsLS1ULEbMbrOsvd1F',
-    //             redirect_uri:  'https://imfpastexams.z11.web.core.windows.net/'
-    //         },
-    //         config
-    //     ).then(t=>{
-    //         return res.send(t.data.access_token);
-            // const token = t.data.access_token;
-            // const authstr = "Bearer ".concat(token);
-            // console.log(authstr);
-            // axios.get(
-            //     "https://id.nycu.edu.tw/api/profile/",
-            //     {
-            //         headers: {Authorization: authstr}
-            //     }
-            // ).then(user=>{
-            //     res.send(user.data.username);
-            // })
-        // })
-    // }
-    // catch(err){
-    //     res.send("fuck you")
-    //     // next(err)
-    // }
 })
 
 // Use self-defined routes
