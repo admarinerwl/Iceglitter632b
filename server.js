@@ -82,7 +82,7 @@ app.get("/auth", async (req, res, next) => {
                 "username": data.username,
                 "email": data.email
             })
-            res.cookie("hi", "hi");
+            // res.cookie("hi", "hi");
             return res.redirect('https://imfpastexams.z11.web.core.windows.net/?'+query);
         })
     })

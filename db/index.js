@@ -1,6 +1,5 @@
 const mysql = require("mysql2");
 const sha256 = require("crypto-js/sha256");
-const { rest, reject } = require("lodash");
 
 const sqlite3 = require("sqlite3").verbose();
 const file = "./imfpastexams.db";
@@ -42,7 +41,14 @@ db.all = (req) => {
 };
 
 db.getcourses = (id) => {
-    var sql = `SELECT coursename FROM grades WHERE grade = ${id} ORDER BY coursename DESC`;
+    var year;
+    if(id==='1') year = '大一';
+    if(id==='2') year = '大二';
+    if(id==='3') year = '大三';
+    if(id==='4') year = '大四';
+    if(id==='0') year = 0;
+    
+    var sql = `SELECT DISTINCT course FROM courses WHERE grade = '${year}' ORDER BY course DESC`;
     var params = [];
     return new Promise((resolve, reject)=>{
         database.all(sql, params, (err, rows) =>{
@@ -56,7 +62,7 @@ db.getcourses = (id) => {
 };
 
 db.getallcourses = () => {
-    var sql = `SELECT coursename FROM grades ORDER BY coursename DESC`;
+    var sql = `SELECT DISTINCT course FROM courses ORDER BY course DESC`;
     var params = [];
     return new Promise((resolve, reject)=>{
        database.all(sql, params, (err, rows)=>{
@@ -93,8 +99,9 @@ db.upload = (body, filename) => {
     let code = course+year+type+teacher+filename;
     let id = sha256(code).toString();
 
+    console.log("inside upload")
     database.run(
-        `INSERT INTO courses VALUES(?,?,?,?,?,?,?,?)`, 
+        `INSERT INTO courses(id, year, course, teacher, type, filename, grade, contributor) VALUES(?,?,?,?,?,?,?,?)`, 
         [id, year, course, teacher, type, filename, grade, provider],
         (err)=>{
             if(err){
