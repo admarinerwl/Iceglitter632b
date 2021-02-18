@@ -22,12 +22,12 @@ app.use(express.static("data"));
 app.unsubscribe(express.urlencoded({extended:false}));
 
 //For testing
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
     res.send("YES!");
 });
 
 //file upload
-app.post("/upload", (req, res) => {
+app.post("/api/upload", (req, res) => {
     if(!req.files) {
         return res.status(500).send({msg: "file not found"});
     }
@@ -45,7 +45,7 @@ app.post("/upload", (req, res) => {
 });
 
 //authenication pls
-app.get("/auth", async (req, res, next) => {
+app.get("/api/auth", async (req, res, next) => {
     console.log(req.query.code);
     const postData = {
         grant_type: 'authorization_code',
@@ -89,6 +89,6 @@ app.get("/auth", async (req, res, next) => {
 })
 
 // Use self-defined routes
-app.use("/dbRouter", Router.router);
+app.use("/api/dbRouter", Router.router);
 
 app.listen( process.env.PORT || 8081 );
