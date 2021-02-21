@@ -52,7 +52,7 @@ app.get("/api/auth", async (req, res, next) => {
         code: req.query.code,
         client_id: 'pOfDk9OdGmTIa9Ro0uvpNDBJX6tfQda3tNPLpqRy',
         client_secret: 'hYkGpVbVxPwmLxatD8D1R7lB6QECW39gPCLdOxydujMEUBs3dQp34M0SnHjVfSgFA3G1VyndcPqukPyDK2ArMJtAtYTTZ73wxe1pbztTW5KK69QsLS1ULEbMbrOsvd1F',
-        redirect_uri:  'https://pastexams-backend.azurewebsites.net/auth'
+        redirect_uri:  'https://pastexam.yagami.dev/api/auth'
     }
     const config = {
         uri: "https://id.nycu.edu.tw/o/token/",
@@ -91,4 +91,4 @@ app.get("/api/auth", async (req, res, next) => {
 // Use self-defined routes
 app.use("/api/dbRouter", Router.router);
 
-app.listen( process.env.PORT || 8081 );
+app.listen( process.env.PORT || 8082 );
