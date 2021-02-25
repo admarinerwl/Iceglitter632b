@@ -34,11 +34,14 @@ app.post("/api/upload", (req, res) => {
     const myFile = req.files.file;
     const ext = path.extname(myFile.name);
     const filename = Router.uploadtodb(req.body, myFile.name);
+    console.log(filename);
     myFile.mv(`./data/${filename+ext}`, function(err){
         if(err) {
             console.log(err);
             return res.status(500).send({msg:"error occured"});
         }
+        console.log("myfile name");
+        console.log(myFile.name);
         return res.send({name:myFile.name, path:`/${myFile.name}`});
     });
     
