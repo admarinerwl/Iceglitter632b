@@ -1,6 +1,7 @@
 const express = require("express");
 const { forInRight } = require("lodash");
 const db = require("../db");
+const extpath = require("path");
 
 const router = express.Router();
 
@@ -63,12 +64,25 @@ router.get("/getallteachers", async (req, res, next) =>{
 
 router.get("/download/:id", async (req, res, next) => {
     try{
-        let results = await db.getfilename(req.params.id);
-        res.json(results);
+        const id = req.params.id;
+        console.log(id);
+        let results = await db.getfilename(id);
+        const filename = results[0].filename;
+        const ext = extpath.extname(filename)
+        const file = id+ext;
+        console.log(file);
+        res.download(extpath.join("data", file), filename);
+        // res.sendFile("data/"+file);
+        // res.json(results);
     } catch(e) {
         console.log(e);
         res.sendStatus(500);
     }
+});
+
+router.get("/file/:filename", (req, res) => {
+    const file = "data/"+filename;
+    res.download(file);
 });
 
 function uploadtodb(body, filename) {
