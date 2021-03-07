@@ -43,10 +43,10 @@ db.all = (req) => {
 db.getcourses = (id) => {
     var year;
     if(id==='1') year = '大一';
-    if(id==='2') year = '大二';
-    if(id==='3') year = '大三';
-    if(id==='4') year = '大四';
-    if(id==='0') year = 0;
+    else if(id==='2') year = '大二';
+    else if(id==='3') year = '大三';
+    else if(id==='4') year = '大四';
+    else year = "其他課程";
     
     var sql = `SELECT DISTINCT course FROM courses WHERE grade = '${year}' ORDER BY course DESC`;
     var params = [];
