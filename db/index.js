@@ -105,7 +105,7 @@ db.upload = (body, filename) => {
         [id, year, course, teacher, type, filename, grade, provider],
         (err)=>{
             if(err){
-                return console.log(err.message);
+                return console.log('error occured in upload database');
             }
             console.log("Row was added to table");
         }
