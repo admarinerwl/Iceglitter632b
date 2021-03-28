@@ -23,6 +23,7 @@ app.unsubscribe(express.urlencoded({extended:false}));
 
 //For testing
 app.get("/api", (req, res) => {
+    console.log(__dirname);
     res.send("YES!");
 });
 
@@ -36,7 +37,8 @@ app.post("/api/upload", (req, res) => {
     const filename = Router.uploadtodb(req.body, myFile.name);
     console.log("called upload api, filename after");
     console.log(filename);
-    myFile.mv(`./data/${filename+ext}`, function(err){
+    console.log(__dirname);
+    myFile.mv(`${__dirname}/data/${filename+ext}`, function(err){
         if(err) {
             console.log("there is an error");
             return res.status(500).send({msg:"error occured"});
